@@ -1,4 +1,4 @@
-const CACHE = "tp28-20261112192852";
+const CACHE = "tp28-20261113000631";
 const DATEIEN = ["./", "index.html", "app.js", "uebungen.js", "animation.js", "manifest.webmanifest", "icon.svg"];
 
 self.addEventListener("install", e => {

@@ -12,7 +12,7 @@ const W = [
 const FOLGE = ["A","M1","B","M2","C","G","R"];
 const TAGNAME = ["Kraft","Mobility","Kraft","Mobility","Kraft","Koordination","Erholung"];
 const PAUSE_SATZ = 30, VORLAUF = 5;
-const ATEM = [["Einatmen",4],["Ausatmen",7],["Ruhe",2]];
+const ATEM = [["Einatmen",4],["Ausatmen",8],["Ruhe",1]];
 
 const T = (id,sec,s=1,side=false)=>({id,k:"t",sec,s,side});
 const R = (id,reps,s=1,side=false)=>({id,k:"r",reps,s,side});
@@ -21,44 +21,46 @@ const K = (id,side=false)=>({id,k:"k",side});
 
 function plan(typ,wk){
   const r = wk===0 ? 2 : 3;
-  const auf = {n:"Aufwärmen",m:5,u:[B("atem",6),R("katze","8 langsam"),T("marsch",60),R("bandzug","12"),T("hocke",30,2)]};
+  const PYR = "5, 4, 3 je Seite · je 8 s halten";
+  const auf = extra => ({n:"Aufwärmen",m:5,u:[B("atem",6),R("katze","5 sehr langsam"),T("marsch",60),extra||R("bandzug","12"),T("hocke",30,2)]});
   const P = {
-   A:{typ:"kraft",t:"Kraft A · Beine und Ziehen",b:[auf,
-     {n:"Mobility",m:7,u:[T("hueftbeuger",45,1,true),R("hueftknick","10"),T("verbeugung",30,2)]},
+   A:{typ:"kraft",t:"Kraft A · Beine und Ziehen",b:[auf(),
+     {n:"Mobility",m:5,u:[B("hueftbeuger",4,1,true),R("hueftknick","10"),B("verbeugung",3,2)]},
      {n:"Kraft, Paar 1 im Wechsel",m:6,pair:true,u:[K("kniebeuge"),K("trxrudern")]},
      {n:"Kraft, Paar 2 im Wechsel",m:6,pair:true,u:[K("kreuzheben"),K("facepull")]},
-     {n:"Rumpf",m:3,u:[R("pallof","8",2,true)]},
+     {n:"Rumpf",m:6,u:[R("pallof","8",1,true),R("birddog",PYR)]},
      {n:"Ausklang",m:3,u:[T("haengen",25,2),B("rippenband",5)]}]},
-   B:{typ:"kraft",t:"Kraft B · Drücken, Ziehen, Rumpf",b:[auf,
-     {n:"Mobility",m:7,u:[R("buch","6",1,true),R("wandengel","8"),R("kinn","8, je 5 s halten")]},
+   B:{typ:"kraft",t:"Kraft B · Drücken, Ziehen, Rumpf",b:[auf(),
+     {n:"Mobility",m:4,u:[R("schulterblattstuetz","8–10",2),R("kinn","8, je 5 s halten")]},
      {n:"Kraft, Paar 1 im Wechsel",m:6,pair:true,u:[K("liegestuetz"),K("einarmrudern",true)]},
      {n:"Kraft, Paar 2 im Wechsel",m:6,pair:true,u:[K("druecken",true),R("aussenrot","12",1,true)]},
-     {n:"Rumpf",m:3,u:[R("kaefer","6",2,true),T("seitstuetz",[15,25,15,25][wk],2,true)]},
-     {n:"Ausklang",m:3,u:[T("brust",30,1,true),T("haengen",25),B("atem",5)]}]},
-   C:{typ:"kraft",t:"Kraft C · Einbeinig und Tragen",b:[auf,
-     {n:"Mobility",m:7,u:[R("sitz9090","6 Wechsel"),R("kniewand","8",1,true),R("beinheben","8, dann 30 s halten",1,true)]},
+     {n:"Rumpf",m:5,u:[R("kaefer","6",1,true),R("seitstuetz",PYR)]},
+     {n:"Ausklang",m:3,u:[B("brust",3,1,true),T("haengen",25),B("atem",5)]}]},
+   C:{typ:"kraft",t:"Kraft C · Einbeinig und Tragen",b:[auf(),
+     {n:"Mobility",m:6,u:[R("sitz9090","6 Wechsel"),R("kniewand","8",1,true),R("beinheben","8, dann 30 s halten",1,true)]},
      {n:"Kraft, Paar 1 im Wechsel",m:6,pair:true,u:[K("ausfall",true),K("latzug")]},
      {n:"Kraft, Paar 2 im Wechsel",m:6,pair:true,u:[K("bruecke"),R("schulterzug","6")]},
-     {n:"Rumpf",m:3,u:[T("tragen",30,wk<2?2:3,true)]},
-     {n:"Ausklang",m:3,u:[T("figur4",30,1,true),B("krokodil",6)]}]},
-   M1:{typ:"mob",t:"Mobility oben · Brustkorb, Schulter, Nacken",b:[auf,
-     {n:"Atmung und Brustkorb",m:7,u:[B("rippenband",8),B("seitatmung",4,2,true),R("buch","8",1,true),T("verbeugung",30,3)]},
-     {n:"Schulter und Nacken",m:10,u:[R("wandengel","8",2),T("brust",30,2,true),R("kinn","10, je 5 s halten"),R("nackendreh","5",1,true),R("nackeniso","4 Richtungen, je 3 × 6 s"),T("nackendehn",30,1,true)]},
-     {n:"Leichte Aktivierung",m:5,u:[R("facepull","12 leicht",2),R("trxy","8",2)]},
-     {n:"Ausklang",m:3,u:[T("haengen",30,2),B("krokodil",6)]}]},
-   M2:{typ:"mob",t:"Mobility unten · Hüfte, Beinrückseite, Gleichgewicht",b:[auf,
-     {n:"Hüfte und Beine",m:13,u:[T("hueftbeuger",45,2,true),R("beinheben","10, dann 30 s halten",1,true),R("sitz9090","8 Wechsel"),R("schaukel","8",1,true),R("kniewand","10",1,true),T("hocke",40,3)]},
-     {n:"Gleichgewicht",m:4,u:[T("einbein",20,3,true),R("tandem","4 Bahnen")]},
-     {n:"Leichte Aktivierung",m:5,u:[R("bruecke","12 ohne Gewicht",2),R("seitschritt","10 Schritte je Richtung",2)]},
-     {n:"Ausklang",m:3,u:[T("figur4",45,1,true),B("atem",6)]}]},
-   G:{typ:"koord",t:"Groß und schnell · Koordination und Schnellkraft",b:[auf,
+     {n:"Rumpf",m:4,u:[T("tragen",30,2,true),T("unterarmstuetz",20,[2,3,2,3][wk])]},
+     {n:"Ausklang",m:3,u:[B("figur4",3,1,true),B("krokodil",6)]}]},
+   M1:{typ:"mob",t:"Mobility oben · Brustkorb, Schulter, Nacken",b:[auf(R("schulterkreis","3 je Richtung",1,true)),
+     {n:"Atmung und Brustkorb",m:9,u:[T("rolleflanke",60,1,true),B("lufttanker",5),R("luftwelle","8 Wechsel"),B("seitatmung",4,1,true),R("buch","8",1,true)]},
+     {n:"Schulter und Nacken",m:10,u:[T("ballbrust",60,1,true),R("wandgleiten","10"),R("wandengel","8"),B("bandschulter",4,1,true),R("kinn","10, je 5 s halten"),R("nackendreh","5",1,true),R("nackeniso","4 Richtungen, je 3 × 6 s")]},
+     {n:"Leichte Aktivierung",m:3,u:[R("facepull","12 leicht",2),R("trxy","8")]},
+     {n:"Ausklang",m:4,u:[T("haengen",30,2),B("krokodil",12)]}]},
+   M2:{typ:"mob",t:"Mobility unten · Hüfte, Beinrückseite, Gleichgewicht",b:[auf(R("hueftkreis","3 je Richtung",1,true)),
+     {n:"Hüfte und Beine",m:12,u:[B("hueftbeuger",4,1,true),R("beinheben","10, dann 30 s halten",1,true),R("sitz9090","8 Wechsel"),R("gesaessheben","8",1,true),
+        wk===0?R("schaukel","8",1,true):R("kosake","6 je Seite",wk>1?2:1),R("kniewand","10",1,true),T("hocke",40,2)]},
+     {n:"Gleichgewicht",m:4,u:[T("blick",30,2),T("einbein",20,2,true),R("tandem","4 Bahnen")]},
+     {n:"Leichte Aktivierung",m:3,u:[R("bruecke","12 ohne Gewicht",2),R("seitschritt","10 Schritte je Richtung")]},
+     {n:"Ausklang",m:4,u:[B("figur4",3,1,true),B("krokodil",12)]}]},
+   G:{typ:"koord",t:"Groß und schnell · Koordination und Schnellkraft",b:[auf(),
      {n:"Zirkel: "+r+" Runden",m:r*6,auto:true,rounds:r,work:40,pause:20,note:"Läuft von allein: 40 Sekunden üben, 20 Sekunden wechseln. Bewegungen groß, laut mitzählen.",u:["ueberkreuz","aufstehen","boxen","seitschritt","reichweite","holzhacker"].map(id=>T(id,40))},
-     {n:"Gleichgewicht",m:4,u:[T("einbein",20,2,true),R("tandem","4 Bahnen")]},
-     ...(wk===0?[{n:"Mobility",m:6,u:[T("hueftbeuger",45,1,true),T("verbeugung",30,2),R("buch","6",1,true)]}]:[]),
+     {n:"Gleichgewicht",m:4,u:[T("blick",30,2),T("einbein",20,2,true)]},
+     ...(wk===0?[{n:"Mobility",m:6,u:[B("hueftbeuger",4,1,true),B("verbeugung",3,2),R("buch","6",1,true)]}]:[]),
      {n:"Ausklang",m:3,u:[T("haengen",25,2),B("atem",6)]}]},
    R:{typ:"ruhe",t:"Erholung · Atmung und Lockern",b:[
-     {n:"Atmung",m:8,u:[B("atem",8),B("krokodil",8),B("rippenband",8),B("seitatmung",4,1,true)]},
-     {n:"Sanfte Mobility",m:12,u:[R("katze","10 langsam"),R("buch","6",1,true),T("hueftbeuger",45,1,true),T("figur4",45,1,true),R("nackendreh","5",1,true),T("haengen",30,2)]},
+     {n:"Atmung",m:9,u:[B("atem",8),B("lufttanker",5),R("luftwelle","8 Wechsel"),B("rippenband",8),B("krokodil",12)]},
+     {n:"Sanfte Mobility",m:12,u:[T("rolleflanke",60,1,true),R("katze","5 sehr langsam"),R("buch","6",1,true),B("hueftbeuger",4,1,true),B("figur4",3,1,true),R("nackendreh","5",1,true),B("nackendehn",3,1,true),T("haengen",30,2)]},
      {n:"Gehen",m:10,u:[T("gehen",600)]}]}
   };
   return P[typ];
@@ -177,6 +179,9 @@ function zeigePlan(){
     const p = tagPlan(h);
     kopf = '<div class="card heute"><div class="klein">Heute · Tag '+h+' von 28</div><h3>'+p.t+'</h3><p class="klein">'+minuten(p)+' Minuten · '+W[wocheVon(h)].t+'</p><div class="reihe"><button class="btn haupt" data-start="'+h+'" type="button">'+(erledigt(h)?"Noch einmal starten":"Einheit starten")+'</button><a class="btn" href="#tag'+h+'" data-auf="'+h+'">Übungen ansehen</a></div></div>';
   }
+  const ZW = [["Gestützte tiefe Hocke","1–2 Minuten an der Sprossenwand oder am Türrahmen"],["Schulterkreisen unter Spannung","3 langsame Kreise je Richtung und Seite"],["Brustöffnung","Fäuste seitlich an den Brustkorb, Ellbogen nach hinten schieben, 3 Sekunden halten, dreimal"]];
+  const tagKey = iso(new Date());
+  kopf += '<div class="card zw"><h3>Zwischendurch</h3><p class="klein">Zusätzlich zur Einheit, über den Tag verteilt: jede Übung dreimal. Antippen, wenn erledigt.</p>'+ZW.map((z,i)=>{const n=+store.get("zw_"+tagKey+"_"+i,"0");return '<button type="button" class="zw-zeile'+(n>=3?" voll":"")+'" data-zw="'+i+'"><span><b>'+z[0]+'</b><br><span class="klein">'+z[1]+'</span></span><span class="zw-zahl">'+Math.min(n,3)+' / 3</span></button>'}).join("")+'</div>';
   let html = kopf+'<div class="fortschritt"><span class="min">'+fertig+' / 28</span><div class="balken"><i style="width:'+(fertig/28*100)+'%"></i></div></div>';
   for(let wk=0;wk<4;wk++){
     html += '<section class="woche"><div class="woche-kopf"><h3>'+W[wk].t+'</h3><span class="klein">Kraftteil: '+W[wk].s+' Sätze × '+W[wk].w+' Wiederholungen</span></div><div class="woche-info">'+W[wk].i+'</div>';
@@ -200,6 +205,8 @@ function zeigePlan(){
 }
 $("#plan").addEventListener("click",e=>{
   const s = e.target.closest("[data-start]"), k = e.target.closest("[data-haken]"), a = e.target.closest("[data-auf]");
+  const zw = e.target.closest("[data-zw]");
+  if(zw){ const k="zw_"+iso(new Date())+"_"+zw.dataset.zw, n=+store.get(k,"0"); store.set(k,String(n>=3?0:n+1)); zeigePlan(); return; }
   if(s) starte(+s.dataset.start);
   if(k){ const nr=k.dataset.haken; store.set("tag_"+nr,erledigt(nr)?"0":"1"); zeigePlan(); const d=$("#tag"+nr); if(d) d.open=true; }
   if(a){ const d=$("#tag"+a.dataset.auf); if(d) d.open=true; }
@@ -216,7 +223,11 @@ const M = [
  ["brustkorb","Brustkorb-Dehnung (cm)","Maßband auf Höhe der Brustbeinspitze: Umfang voll eingeatmet minus voll ausgeatmet"],
  ["engel","Wandengel","Bleiben Handrücken und Ellbogen an der Wand? ja / teilweise / nein"],
  ["einbeinl","Einbeinstand links (s)","Arme locker, höchstens 30 s"],
- ["einbeinr","Einbeinstand rechts (s)","Wie links"]
+ ["einbeinr","Einbeinstand rechts (s)","Wie links"],
+ ["haender","Hände hinter dem Rücken, rechte oben (cm)","Eine Hand von oben, eine von unten; Abstand der Fingerspitzen, 0 = sie berühren sich"],
+ ["haendel","Hände hinter dem Rücken, linke oben (cm)","Wie rechts"],
+ ["blindmarsch","Marschieren mit geschlossenen Augen (cm)","Startpunkt markieren, 30 s auf der Stelle marschieren, Abweichung messen. Neben der Wand, am besten schaut jemand zu"],
+ ["ausatmen","Lange Ausatmung (s)","Dreimal ruhig atmen, dann einmal so langsam wie möglich durch die Nase ausatmen und die Zeit stoppen. Nicht pressen; gern jede Woche wiederholen"]
 ];
 function zeigeMesswerte(){
   $("#messwerte").innerHTML = M.map(m=>'<tr><td><b>'+m[1]+'</b><div class="klein">'+m[2]+'</div></td><td><input data-m="'+m[0]+'_1" aria-label="'+m[1]+' Tag 1"></td><td><input data-m="'+m[0]+'_28" aria-label="'+m[1]+' Tag 28"></td></tr>').join("");

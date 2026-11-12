@@ -68,6 +68,22 @@ const Anim = (() => {
     seitschritt:{fv:1,f:[{...FV,x:68,a:[165,230],b:[195,130],l:[170,182],r:[190,178]},{x:84,l:[150,186],r:[186,180]}],pr:[["link","kL","kR"]],T:2},
     reichweite:{f:[{...S,a:[225,215]},{t:10,a:[25,20],l:[80,180],r:[200,255]}],fix:{k:"aR",x:56}},
     holzhacker:{fv:1,f:[{...FV,x:84,t:8,a:[140,130],b:[110,120]},{t:-8,a:[300,310],b:[320,315]}],pr:[WAND,["band",126,98,"wA"]]},
+    lufttanker:{f:[{t:270,a:[95,95],l:[35,145]}],fix:{k:"aL",x:96},puls:1},
+    luftwelle:{f:[{t:270,a:[60,110],l:[35,145]}],fix:{k:"aL",x:96},puls:1},
+    schulterkreis:{f:[{...S,a:[180,180],b:[178,176]},{a:[90,90]},{a:[0,0]},{a:[-90,-90]},{a:[-180,-180]}],T:7},
+    hueftkreis:{f:[{t:82,x:74,a:[180,180],l:[180,268],r:[180,268]},{l:[115,225]},{l:[250,300]}],T:5},
+    schulterblattstuetz:{v:["schulterblattstuetz","schulterblattstuetz","schulterblattstuetz_hoch","schulterblattstuetz_hoch"],f:[{t:82,x:74,c:-3,h:95,a:[180,180],l:[180,268]},{c:6}],T:2.6},
+    schulterblattstuetz_hoch:{f:[{t:69,h:75,c:-3,a:[180,180],l:[249,249]},{c:6}],fix:{k:"aL",x:40},T:2.6},
+    wandgleiten:{f:[{...S,a:[95,5]},{a:[40,8]}],fix:{k:"aL",x:98},pr:[["pfosten",116]],T:4},
+    bandschulter:{f:[{t:62,a:[58,58],b:[180,180],l:[176,182]}],puls:1,fix:{k:"aL",x:58},pr:[WAND,["band",126,14,"wA"]]},
+    gesaessheben:{f:[{t:8,a:[100,100],l:[92,268]},{t:0,a:[150,165],l:[180,270]}],T:3.4},
+    kosake:{fv:1,f:[{...FV,t:4,a:[150,300],b:[210,60],l:[105,195],r:[232,232]},{t:0,l:[152,176],r:[208,184]},{t:-4,l:[128,128],r:[255,165]}],T:5},
+    blick:{fv:1,f:[{...FV,a:[-20,-10],as:0.45,n:-0.8},{n:0.8}],T:4},
+    unterarmstuetz:{v:["unterarmstuetz_knie","unterarmstuetz_knie","unterarmstuetz","unterarmstuetz"],f:[{t:79,h:70,a:[180,92],l:[259,259]}],fix:{k:"aL",x:44},puls:1},
+    unterarmstuetz_knie:{f:[{t:74,h:66,a:[180,92],l:[254,285]}],fix:{k:"kL",x:60},puls:1},
+    birddog:{f:[{t:82,x:74,a:[180,180],b:[180,180],l:[180,268],r:[180,268]},{a:[84,84],r:[264,264]}],T:4},
+    rolleflanke:{cap:"Seitlage, Rolle unter der Flanke",f:[{t:270,x:82,a:[-90,-90],b:[60,120],l:[100,80],r:[80,100]}],puls:1,pr:[["kreis",62,101,7]]},
+    ballbrust:{f:[{...S,a:[215,205],b:[178,176]},{a:[130,120]}],fix:{k:"aL",x:70},pr:[["pfosten",84],["kreis",78,34,4]],T:3},
     gehen:{f:[{...S,l:[160,172],r:[200,205],a:[205,195],b:[150,140]},{l:[200,205],r:[160,172],a:[150,140],b:[205,195]}],T:1.2}
   };
 
@@ -139,6 +155,7 @@ const Anim = (() => {
     for (const pr of d.pr || []) {
       if (pr[0] === "wand") { s += '<line class="an-g" x1="128" y1="8" x2="128" y2="'+BODEN+'"/>'; for (let y = 16; y < BODEN; y += 10) s += '<line class="an-g" x1="122" y1="'+y+'" x2="128" y2="'+y+'"/>'; }
       if (pr[0] === "pfosten") s += '<line class="an-g" x1="'+pr[1]+'" y1="8" x2="'+pr[1]+'" y2="'+BODEN+'"/>';
+      if (pr[0] === "kreis") s += '<circle class="an-g" cx="'+pr[1]+'" cy="'+pr[2]+'" r="'+pr[3]+'"/>';
       if (pr[0] === "box") s += '<rect class="an-g" x="'+pr[1]+'" y="'+pr[2]+'" width="'+pr[3]+'" height="'+pr[4]+'" rx="2"/>';
       if (pr[0] === "band") s += pl("an-z",[pr[1],pr[2]],P[pr[3]]);
       if (pr[0] === "link") s += pl("an-z",P[pr[1]],P[pr[2]]);
