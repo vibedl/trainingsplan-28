@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trainingsplan 28 Tage</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f6b63">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root{
+  --bg:#f6f5f1; --card:#ffffff; --ink:#1d2327; --muted:#5d676e; --line:#dcd9d0;
+  --accent:#0f6b63; --accent-bg:#e2f1ef;
+  --kraft:#0f6b63; --kraft-bg:#e2f1ef;
+  --mob:#3a5fa8; --mob-bg:#e5ecf8;
+  --koord:#96590a; --koord-bg:#f8ecd6;
+  --ruhe:#5d676e; --ruhe-bg:#ebebe6;
+  --warn:#9a2b1f; --warn-bg:#fbe9e6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15191b; --card:#1f2528; --ink:#e9ecec; --muted:#a2adb2; --line:#343c40;
+    --accent:#62c9bd; --accent-bg:#17332f;
+    --kraft:#62c9bd; --kraft-bg:#17332f;
+    --mob:#9db8ef; --mob-bg:#1e2a44;
+    --koord:#e9b666; --koord-bg:#3a2b12;
+    --ruhe:#a2adb2; --ruhe-bg:#2a3034;
+    --warn:#f2a094; --warn-bg:#3d1c18;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+main{max-width:980px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:30px;line-height:1.15;margin:0 0 6px;letter-spacing:-.01em}
+h2{font-size:21px;margin:40px 0 12px}
+h3{font-size:16px;margin:0 0 6px}
+p{margin:0 0 10px}
+a{color:var(--accent)}
+.lead{color:var(--muted);max-width:68ch}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
+.chip{font-size:13px;padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.warn{background:var(--warn-bg);border-color:var(--warn);}
+.warn h3{color:var(--warn)}
+ul{margin:0;padding-left:20px}
+li{margin:0 0 5px}
+.ablauf{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.ablauf div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.ablauf b{display:block}
+.ablauf span{font-size:13px;color:var(--muted)}
+.min{font-variant-numeric:tabular-nums;color:var(--accent);font-weight:600}
+.fortschritt{display:flex;align-items:center;gap:12px;margin:10px 0 0}
+.balken{flex:1;height:8px;background:var(--line);border-radius:999px;overflow:hidden}
+.balken i{display:block;height:100%;width:0;background:var(--accent)}
+.woche{margin-top:26px}
+.woche-kopf{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;margin-bottom:4px}
+.woche-kopf h3{font-size:18px;margin:0}
+.woche-info{font-size:14px;color:var(--muted);margin-bottom:10px}
+details.tag{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+details.tag[open]{border-color:var(--accent)}
+details.tag>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 14px}
+details.tag>summary::-webkit-details-marker{display:none}
+.nr{font-weight:700;font-variant-numeric:tabular-nums;min-width:58px}
+.typ{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.t-kraft{color:var(--kraft);background:var(--kraft-bg)}
+.t-mob{color:var(--mob);background:var(--mob-bg)}
+.t-koord{color:var(--koord);background:var(--koord-bg)}
+.t-ruhe{color:var(--ruhe);background:var(--ruhe-bg)}
+.titel{flex:1;min-width:0}
+.erledigt{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.erledigt input{width:20px;height:20px;accent-color:var(--accent)}
+.tag-inhalt{padding:0 14px 14px}
+.block{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+.block-kopf{display:flex;justify-content:space-between;gap:10px;font-weight:600;margin-bottom:4px}
+.block-notiz{font-size:13px;color:var(--muted);margin-bottom:6px}
+details.ue{border-bottom:1px dashed var(--line)}
+details.ue:last-child{border-bottom:0}
+details.ue>summary{cursor:pointer;display:flex;justify-content:space-between;gap:12px;padding:7px 0;list-style:none}
+details.ue>summary::-webkit-details-marker{display:none}
+details.ue>summary span:first-child::before{content:"+ ";color:var(--accent);font-weight:700}
+details.ue[open]>summary span:first-child::before{content:"– "}
+.dosis{font-variant-numeric:tabular-nums;color:var(--muted);text-align:right;white-space:nowrap}
+.wie{font-size:14px;color:var(--muted);padding:0 0 9px 14px;max-width:70ch}
+.wie b{color:var(--ink);font-weight:600}
+.stufe{color:var(--accent)}
+.tabelle{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:14px}
+th{font-size:12px;color:var(--muted);text-transform:none;font-weight:600}
+td input{width:100%;max-width:130px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:14px}
+.btn{font:inherit;font-size:14px;padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.quellen li{font-size:14px;margin-bottom:8px}
+.klein{font-size:13px;color:var(--muted)}
+@media (max-width:560px){
+  h1{font-size:25px}
+  details.tag>summary{flex-wrap:wrap}
+  .titel{flex-basis:100%;order:3}
+  .dosis{white-space:normal;max-width:45%}
+}
+@media print{
+  body{background:#fff}.btn,.erledigt{display:none}
+  details.tag{break-inside:avoid}
+}
+main{padding-bottom:110px}
+[hidden]{display:none !important}
+.btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;min-height:40px}
+.btn.haupt{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:600}
+.btn.gross{width:100%;min-height:60px;font-size:19px;border-radius:14px}
+.btn:disabled{opacity:.4}
+.reihe{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.heute{border-color:var(--accent);margin-top:18px}
+.heute h3{font-size:21px;margin:2px 0 4px}
+.heute input[type=date], .opt input[type=date]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+details.tag.ist-heute{border-color:var(--accent);border-width:2px}
+.haken{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex:none}
+.haken.an{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.tag-inhalt>.reihe{margin-bottom:4px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav.tabs a{flex:1;text-align:center;padding:14px 4px;text-decoration:none;color:var(--muted);font-size:14px;font-weight:600;border-top:3px solid transparent}
+nav.tabs a.an{color:var(--accent);border-top-color:var(--accent)}
+#spieler{max-width:560px;margin:0 auto}
+.sp-kopf{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.sp-kopf .balken{flex:1}
+.sp-block{font-size:14px;color:var(--muted);font-weight:600}
+.sp-name{font-size:27px;line-height:1.2;margin:2px 0 14px}
+.sp-buehne{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center;overflow:hidden}
+.sp-buehne.laeuft{border-color:var(--accent);background:var(--accent-bg)}
+.sp-zahl{position:relative;font-size:96px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.sp-zahl.text{font-size:40px}
+.sp-phase{position:relative;margin-top:10px;color:var(--muted);font-size:16px;min-height:24px}
+.kreis{position:absolute;width:210px;height:210px;border-radius:50%;background:var(--accent-bg);border:2px solid var(--accent);transform:scale(.45);transition:transform 4s ease-in-out}
+.kreis.voll{transform:scale(1)}
+.sp-tasten{margin:14px 0 10px}
+.sp-neben{display:flex;gap:8px;margin-bottom:16px}
+.sp-neben .btn{flex:1}
+.sp-wie{font-size:15px}
+.sp-wie p:last-child{margin-bottom:0}
+.sp-naechste{margin-top:12px;text-align:center}
+.skala{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}
+.skala .btn{padding:0;min-height:44px}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.opt:last-child{border-bottom:0}
+.opt input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent)}
+table{min-width:0}
+@media (max-width:560px){.sp-zahl{font-size:84px}.skala{grid-template-columns:repeat(6,1fr)}}
+</style>
+</head>
+<body>
+<main>
+<section class="ansicht" id="ansicht-plan">
+  <h1>Ganzkörper-Plan, 28 Tage</h1>
+  <p class="lead">Täglich rund 30 Minuten: Aufwärmen, Mobility und leichtes Krafttraining mit Sprossenwand, Kurzhanteln, Kettlebells, Gummizügen und TRX.</p>
+  <div id="plan"></div>
+</section>
+
+<section class="ansicht" id="ansicht-messwerte" hidden>
+  <h1>Messwerte</h1>
+  <p class="lead">An Tag 1 und Tag 28, je fünf Minuten. Gleiche Tageszeit, vorher das Aufwärmen.</p>
+  <div class="card tabelle" style="margin-top:14px">
+  <table>
+  <thead><tr><th>Test</th><th>Tag 1</th><th>Tag 28</th></tr></thead>
+  <tbody id="messwerte"></tbody>
+  </table>
+  </div>
+</section>
+
+<section class="ansicht" id="ansicht-hinweise" hidden>
+  <h1>Hinweise</h1>
+  <h2>Bevor du startest</h2>
+<div class="grid2">
+  <div class="card warn">
+    <h3>Erst abklären: die Atmung</h3>
+    <p>Wer nicht frei durchatmen kann, lässt das ärztlich abklären, bevor die Belastung steigt. Die Atemübungen hier sind sanft und ersetzen diese Abklärung nicht.</p>
+    <p><b>Sofort abbrechen und ärztliche Hilfe holen</b> bei Atemnot in Ruhe, Druck oder Schmerz in der Brust, Herzrasen, Schwindel oder Ohnmachtsgefühl.</p>
+    <p style="margin:0"><b>Übung beenden</b> bei Schmerz, der in Arm oder Bein ausstrahlt, bei Kribbeln, Taubheit, Kraftverlust oder Schwindel bei Nackenübungen.</p>
+  </div>
+  <div class="card">
+    <h3>Schmerz-Regel für jeden Tag</h3>
+    <ul>
+      <li>Merke dir vor dem Training deinen Tageswert (0–10).</li>
+      <li><b>Grün:</b> während der Übung höchstens 2 Punkte darüber, dumpf und ziehend. Weitermachen.</li>
+      <li><b>Gelb:</b> am nächsten Morgen noch über dem Tageswert. Nächstes Mal einen Satz weniger oder die leichtere Stufe.</li>
+      <li><b>Rot:</b> stechend, einschießend oder mehr als 2 Punkte darüber. Übung weglassen, Rest des Plans geht weiter.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Rücken und Nacken schonen</h3>
+    <ul>
+      <li><b>Wirbelsäule:</b> Drehung und Streckung nie mit Schwung oder Druck erzwingen. Die Bewegung soll aus der oberen Brustwirbelsäule und der Hüfte kommen. Keine Sit-ups, keine schweren Drehübungen, Lasten nah am Körper.</li>
+      <li><b>Beide Seiten:</b> einseitige Übungen immer links und rechts, die steifere oder schwächere Seite zuerst.</li>
+      <li><b>Nacken:</b> kein Kopfkreisen, kein Kopf-in-den-Nacken, Blick bei Liegestütz und Rudern zum Boden.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>So holst du am meisten heraus</h3>
+    <ul>
+      <li>Trainiere zu der Tageszeit, zu der du dich am beweglichsten fühlst.</li>
+      <li>Bewegungen bewusst <b>groß</b> ausführen und laut mitzählen.</li>
+      <li>Ab Woche 2 beim Kraftteil <b>zügig hoch, langsam runter</b>.</li>
+      <li>Gleichgewichtsübungen immer in Griffweite der Sprossenwand.</li>
+      <li>Bei Vorerkrankungen den Plan vorher mit Arzt oder Physiotherapeut besprechen.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>So läuft jede Einheit</h2>
+<div class="ablauf">
+  <div><b>1 · Aufwärmen</b><span class="min">5 min</span><br><span>Atmung, Wirbelsäule, großes Marschieren. Jeden Tag gleich, damit es Routine wird.</span></div>
+  <div><b>2 · Mobility</b><span class="min">7–17 min</span><br><span>An Krafttagen kurz und passend zum Kraftteil, an Mobility-Tagen der Hauptteil.</span></div>
+  <div><b>3 · Kraft oder Koordination</b><span class="min">5–18 min</span><br><span>Zwei Übungspaare im Wechsel plus eine Rumpfübung.</span></div>
+  <div><b>4 · Ausklang</b><span class="min">3 min</span><br><span>Aushängen und ruhige Atmung.</span></div>
+</div>
+<p class="klein" style="margin-top:10px">Wochenrhythmus: Kraft A · Mobility oben · Kraft B · Mobility unten · Kraft C · Groß und schnell · Erholung. Drei Krafttage, vier leichtere Tage.</p>
+  <h2>Einstellungen</h2>
+  <div class="card">
+    <label class="opt"><span>Töne bei Timer-Ende und Atem-Takt</span><input type="checkbox" id="optTon"></label>
+    <label class="opt"><span>Takt beim Marschieren (100 Schläge pro Minute)</span><input type="checkbox" id="optTakt"></label>
+    <label class="opt"><span>Starttag</span><input type="date" id="optStart"></label>
+    <div class="opt"><span>Alle Häkchen und Messwerte auf diesem Gerät löschen</span><button class="btn" id="optReset" type="button">Zurücksetzen</button></div>
+  </div>
+  <p class="klein" style="margin-top:8px">Alles wird nur auf diesem Gerät im Browser gespeichert, nichts wird übertragen.</p>
+  <h2>Worauf der Plan sich stützt</h2>
+<div class="card">
+<ul>
+  <li><b>Kraft über den vollen Bewegungsweg macht beweglich.</b> Krafttraining mit Zusatzlast verbessert die Beweglichkeit ähnlich gut wie Dehnen <a href="#q1">[1]</a> <a href="#q2">[2]</a>. Tiefe Kniebeuge, Kreuzheben und Überkopfarbeit sind hier also zugleich Mobility.</li>
+  <li><b>Dehnen: wenig reicht.</b> Der Zugewinn ist bei rund 4 Minuten je Einheit und 10 Minuten je Woche pro Muskelgruppe ausgeschöpft; wer steif startet, gewinnt am meisten <a href="#q3">[3]</a>. Gehaltenes Dehnen bringt mehr Beweglichkeit als federndes <a href="#q4">[4]</a>.</li>
+  <li><b>Nacken.</b> Kräftigung von Nacken, Schulter und Schulterblatt senkt Nackenschmerz bei Büroarbeit (niedrige Beweissicherheit) <a href="#q5">[5]</a>; keine Übungsform ist klar überlegen <a href="#q6">[6]</a>. Daher Rudern, Face Pull und Y-Heben plus Kinn-Rückzug.</li>
+  <li><b>Unterer Rücken.</b> Fast jede Trainingsform hilft; Rumpf-, Kraft- und Pilates-artige Übungen liegen vorn, schon bei 1–2 Einheiten pro Woche <a href="#q7">[7]</a> <a href="#q8">[8]</a>. Auch Schlingentraining wie am TRX schnitt gut ab <a href="#q9">[9]</a>.</li>
+</ul>
+</div>
+<ol class="quellen" style="margin-top:14px">
+  <li id="q1"><a href="https://consensus.app/papers/details/w:d3aa3122-e0b9-4e9c-a767-41053ea82d82/">Resistance Training Induces Improvements in Range of Motion: A Systematic Review and Meta-Analysis</a> (Alizadeh et al., 2023, Sports Medicine)</li>
+  <li id="q2"><a href="https://consensus.app/papers/details/w:1d2c0929-fdbc-4ae9-9896-b1a511b01ba1/">Strength Training versus Stretching for Improving Range of Motion: A Systematic Review and Meta-Analysis</a> (Afonso et al., 2021, Healthcare)</li>
+  <li id="q3"><a href="https://consensus.app/papers/details/w:f9144ec1-0a4b-460b-9693-62bb549d400c/">Optimising the Dose of Static Stretching to Improve Flexibility: A Systematic Review, Meta-analysis and Multivariate Meta-regression</a> (Ingram et al., 2024, Sports Medicine)</li>
+  <li id="q4"><a href="https://consensus.app/papers/details/w:d0699135-66bf-4bb6-8834-37ec6e2ac9e5/">Chronic effects of stretching on range of motion with consideration of potential moderating variables: A systematic review with meta-analysis</a> (Konrad et al., 2023, Journal of Sport and Health Science)</li>
+  <li id="q5"><a href="https://consensus.app/papers/details/w:952c3e16-0dcc-4627-b6c6-6a3231b8e5bb/">The influence of exercise on pain, disability and quality of life in office workers with chronic neck pain: A systematic review and meta-analysis</a> (Jones et al., 2024, Applied Ergonomics)</li>
+  <li id="q6"><a href="https://consensus.app/papers/details/w:c599e379-36e5-40b0-80bd-b9a282909333/">Summarizing the effects of different exercise types in chronic neck pain – a systematic review and meta-analysis of systematic reviews</a> (Rasmussen-Barr et al., 2023, BMC Musculoskeletal Disorders)</li>
+  <li id="q7"><a href="https://consensus.app/papers/details/w:e9918e17-c527-4211-af13-13c87e0c8f9d/">Some types of exercise are more effective than others in people with chronic low back pain: a network meta-analysis</a> (Hayden et al., 2021, Journal of Physiotherapy)</li>
+  <li id="q8"><a href="https://consensus.app/papers/details/w:89c74bf0-8273-456c-a224-3ad7fa1c2bc9/">Best Exercise Options for Reducing Pain and Disability in Adults With Chronic Low Back Pain: Pilates, Strength, Core-Based, and Mind-Body. A Network Meta-analysis</a> (Fernández-Rodríguez et al., 2022, Journal of Orthopaedic and Sports Physical Therapy)</li>
+  <li id="q9"><a href="https://consensus.app/papers/details/w:fe4517cb-fe24-4237-b569-3126b9577307/">Exercise intervention for patients with chronic low back pain: a systematic review and network meta-analysis</a> (Li et al., 2023, Frontiers in Public Health)</li>
+</ol>
+<p class="klein">Dieser Plan ist eine Trainingsempfehlung und keine medizinische Behandlung. Er ersetzt weder Diagnose noch Physiotherapie.</p>
+</section>
+
+<section id="spieler" hidden></section>
+</main>
+<nav class="tabs" aria-label="Bereiche">
+  <a href="#plan">Plan</a>
+  <a href="#messwerte">Messwerte</a>
+  <a href="#hinweise">Hinweise</a>
+</nav>
+<script src="uebungen.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
