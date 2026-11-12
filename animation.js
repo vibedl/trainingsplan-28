@@ -41,9 +41,9 @@ const Anim = (() => {
     tandem:{f:[{...S,l:[168,180],r:[192,188],a:[150,160],b:[210,200]},{l:[192,188],r:[168,180]}],T:2.4},
     kniebeuge:{v:["kniebeuge_trx","kniebeuge","kniebeuge","kniebeuge"],f:[{...S,a:[150,25]},{t:28,l:[95,200]}],fix:{k:"aL",x:84},pr:[["hantel","wA"]]},
     kniebeuge_trx:{f:[{t:-4,a:[62,62],l:[178,178]},{t:8,a:[55,55],l:[92,200]}],fix:{k:"aL",x:86},pr:[WAND,["band",126,10,"wA"]]},
-    kreuzheben:{f:[{...S,a:[180,180]},{t:55,l:[168,186]}],fix:{k:"aL",x:78},pr:[["hantel","wA"]]},
+    kreuzheben:{f:[{...S,a:[180,180]},{t:82,h:70,l:[158,188]}],fix:{k:"aL",x:84},pr:[["hantel","wA"]],T:4},
     trxrudern:{f:[{t:-28,a:[55,55],l:[152,152]},{t:-12,a:[215,60],l:[168,168]}],fix:{k:"aL",x:92},pr:[WAND,["band",126,10,"wA"]]},
-    facepull:{f:[{...S,x:78,a:[85,85]},{a:[65,320]}],pr:[WAND,["band",126,40,"wA"]]},
+    facepull:{fv:1,cap:"Ansicht von vorn · Band kommt von vorn",f:[{...FV,a:[-25,-15],b:[25,15],as:0.5,bs:0.5},{a:[90,0],b:[-90,0],as:1,bs:1}]},
     pallof:{cap:"Band kommt von der Seite",f:[{...S,a:[150,30],l:[175,183]},{a:[92,92]}],pr:[["band",14,58,"wA"]]},
     liegestuetz:{v:["liegestuetz_hoch","liegestuetz_hoch","liegestuetz","liegestuetz"],f:[{t:69,h:75,a:[180,180],l:[249,249]},{t:80,h:84,a:[270,180],l:[260,260]}],fix:{k:"aL",x:40}},
     liegestuetz_hoch:{f:[{t:35,h:40,a:[100,100],l:[215,215]},{t:44,h:50,a:[142,36],l:[224,224]}],fix:{k:"aL",x:47},pr:[WAND]},
@@ -82,6 +82,7 @@ const Anim = (() => {
       q.c = q.c || 0; q.hx = q.hx || 0;
       if (!("as" in q)) q.as = 1;
       if (!("rs" in q)) q.rs = 1;
+      if (!("bs" in q)) q.bs = 1;
       if (!("n" in q)) q.n = d.fv ? 0 : 1;
       if (!("x" in q)) q.x = 80;
       if (!("y" in q)) q.y = 60;
@@ -93,7 +94,7 @@ const Anim = (() => {
     const n = d.f.length;
     if (n === 1) return d.f[0];
     const pos = k*(n-1), i = Math.min(n-2, Math.floor(pos)), u = pos-i, A = d.f[i], B = d.f[i+1], p = {};
-    for (const key of ["t","h","c","hx","n","x","y","as","rs"]) p[key] = mix(A[key],B[key],u);
+    for (const key of ["t","h","c","hx","n","x","y","as","rs","bs"]) p[key] = mix(A[key],B[key],u);
     for (const key of ["a","b","l","r"]) p[key] = [mix(A[key][0],B[key][0],u), mix(A[key][1],B[key][1],u)];
     return p;
   }
@@ -112,7 +113,7 @@ const Anim = (() => {
     P.kopf = add(P.neck,p.h,L.nk+L.hd); P.kopf = [P.kopf[0]+vorn[0]*p.hx, P.kopf[1]+vorn[1]*p.hx];
     P.nase = d.fv ? [P.kopf[0]+p.n*5, P.kopf[1]+1] : [P.kopf[0]+vorn[0]*5*p.n, P.kopf[1]+vorn[1]*5*p.n];
     P.eA = add(P.sA,p.a[0],L.ua*p.as); P.wA = add(P.eA,p.a[1],L.fa*p.as);
-    P.eB = add(P.sB,p.b[0],L.ua); P.wB = add(P.eB,p.b[1],L.fa);
+    P.eB = add(P.sB,p.b[0],L.ua*p.bs); P.wB = add(P.eB,p.b[1],L.fa*p.bs);
     P.kL = add(P.hA,p.l[0],L.th); P.aL = add(P.kL,p.l[1],L.sh);
     P.kR = add(P.hB,p.r[0],L.th*p.rs); P.aR = add(P.kR,p.r[1],L.sh);
     const fl = fuss(p.l[1],d.fv), fr = fuss(p.r[1],d.fv);
