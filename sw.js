@@ -1,5 +1,5 @@
-const CACHE = "tp28-20261112183251";
-const DATEIEN = ["./", "index.html", "app.js", "uebungen.js", "manifest.webmanifest", "icon.svg"];
+const CACHE = "tp28-20261112183931";
+const DATEIEN = ["./", "index.html", "app.js", "uebungen.js", "animation.js", "manifest.webmanifest", "icon.svg"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(DATEIEN)).then(() => self.skipWaiting()));

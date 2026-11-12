@@ -161,7 +161,7 @@ const iso = d => d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+
 function zeile(it,wk,b){
   const e = E[it.id];
   const stufe = e.st ? '<br><b class="stufe">Stufe diese Woche:</b> '+e.st[wk] : "";
-  return '<details class="ue"><summary><span>'+e.n+'</span><span class="dosis">'+dosis(it,wk,b)+'</span></summary><div class="wie">'+e.h+(e.c?'<br><b>Achte auf:</b> '+e.c:"")+stufe+'</div></details>';
+  return '<details class="ue"><summary><span>'+e.n+'</span><span class="dosis">'+dosis(it,wk,b)+'</span></summary><div class="wie"><div class="anim" data-anim="'+it.id+'"></div>'+e.h+(e.c?'<br><b>Achte auf:</b> '+e.c:"")+stufe+'</div></details>';
 }
 
 function zeigePlan(){
@@ -258,12 +258,14 @@ function zeigeSchritt(autostart){
    '<div class="sp-kopf"><button class="btn" id="spZu" type="button" aria-label="Einheit beenden">Beenden</button><div class="balken"><i style="width:'+(S.i/n*100)+'%"></i></div><span class="klein">'+(S.i+1)+' / '+n+'</span></div>'+
    '<div class="sp-block">'+st.b+(satz?' · '+satz:"")+'</div>'+
    '<h2 class="sp-name">'+e.n+'</h2>'+
+   '<div class="anim sp-anim" data-anim="'+st.id+'"></div>'+
    '<div class="sp-buehne" id="buehne"><div class="kreis" id="kreis" hidden></div><div class="sp-zahl '+(st.k==="t"?"":"text")+'" id="zahl">'+gross+'</div><div class="sp-phase" id="phase">'+klein+'</div></div>'+
    '<div class="sp-tasten"><button class="btn haupt gross" id="spHaupt" type="button"></button></div>'+
    '<div class="sp-neben"><button class="btn" id="spZurueck" type="button"'+(S.i===0?" disabled":"")+'>Zurück</button><button class="btn" id="spWeiter" type="button">Überspringen</button></div>'+
    '<div class="card sp-wie"><p>'+e.h+'</p>'+(e.c?'<p><b>Achte auf:</b> '+e.c+'</p>':"")+stufe+'</div>'+
    '<p class="klein sp-naechste">'+(nxt?'Danach: '+E[nxt.id].n:'Das ist die letzte Übung.')+'</p>';
   const haupt = $("#spHaupt"), z = $("#zahl"), ph = $("#phase");
+  if(window.Anim || typeof Anim!=="undefined") Anim.start($("#spieler .anim"));
   $("#spZu").onclick = ()=>{ if(confirm("Einheit beenden? Der Tag wird nicht als erledigt markiert.")) beende(); };
   $("#spZurueck").onclick = ()=>{ S.i=Math.max(0,S.i-1); zeigeSchritt(false); };
   $("#spWeiter").onclick = ()=>weiter(false);
