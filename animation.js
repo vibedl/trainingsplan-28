@@ -11,55 +11,63 @@ const Anim = (() => {
   const WAND = ["wand"];
 
   const U = {
-    atem:{f:[{t:270,x:70,a:[100,100],l:[5,90]}],puls:1,pr:[["box",72,84,28,24]]},
-    krokodil:{f:[{t:90,x:76,h:100,a:[60,120],l:[270,270]}],puls:1},
+    atem:{f:[{t:270,x:70,a:[90,55],l:[5,90]}],puls:1,pr:[["box",72,84,28,24]]},
+    krokodil:{f:[{t:90,x:72,h:100,a:[45,140],l:[270,270]}],puls:1},
     rippenband:{f:[{...S,a:[195,70]}],puls:1},
-    seitatmung:{fv:1,f:[{...FV,x:98,t:-6,a:[40,60],b:[200,190]},{t:-16}],puls:1,pr:[WAND],T:5},
+    seitatmung:{fv:1,f:[{...FV,x:92,t:4,c:2,a:[130,90],b:[20,70]},{t:14,c:7,x:88}],puls:1,pr:[WAND],T:5},
     katze:{f:[{t:82,x:74,c:9,h:150,a:[180,180],l:[180,268]},{c:-5,h:60}],T:4},
-    marsch:{f:[{...S,l:[95,185],r:[180,180],a:[230,215],b:[60,30]},{l:[180,180],r:[95,185],a:[60,30],b:[230,215]}],T:1.2},
-    ueberkreuz:{f:[{...S,t:6,l:[85,185],r:[180,180],a:[230,220],b:[120,70]},{l:[180,180],r:[85,185],a:[120,70],b:[230,220]}],T:1.2},
+    marsch:{f:[{...S,l:[95,185],r:[180,180],a:[230,215],b:[60,30]},{l:[180,180],a:[178,176],b:[178,176]},{r:[95,185],a:[60,30],b:[230,215]}],T:1.2},
+    ueberkreuz:{f:[{...S,t:6,l:[75,180],r:[180,180],a:[230,220],b:[150,125]},{l:[180,180],a:[178,176],b:[178,176]},{r:[75,180],a:[150,125],b:[230,220]}],T:1.2},
     bandzug:{fv:1,f:[{...FV,a:[150,300],b:[210,60]},{a:[90,90],b:[270,270]}],pr:[["link","wA","wB"]]},
     hocke:{f:[{t:22,a:[75,75],l:[72,202]},{t:15,a:[72,72],l:[80,200]}],fix:{k:"wA",x:124},pr:[WAND],T:4},
-    buch:{nog:1,f:[{x:84,y:66,t:270,a:[0,0],b:[0,0],l:[20,150],r:[26,156]},{a:[-172,-180],n:-1}],T:4},
+    buch:{nog:1,f:[{x:84,y:66,t:270,a:[0,0],b:[0,0],l:[20,150],r:[26,156]},{as:0.15},{a:[180,180],n:-1},{as:1}],T:5},
     verbeugung:{f:[{t:70,a:[78,78],l:[178,180]},{t:88,c:-4,a:[84,84],l:[172,180]}],fix:{k:"wA",x:124},pr:[WAND],T:4},
     wandengel:{fv:1,f:[{...FV,a:[95,5],b:[265,355]},{a:[35,10],b:[325,350]}],T:4},
     haengen:{f:[{t:0,a:[12,12],l:[180,255]},{c:2,l:[176,250]}],fix:{k:"wA",x:122,y:16},pr:[WAND],T:4},
     schulterzug:{f:[{t:0,a:[10,10],l:[180,255]},{a:[42,-12]}],fix:{k:"wA",x:122,y:16},pr:[WAND]},
-    kinn:{f:[{...S,hx:3},{hx:-3}]},
+    kinn:{f:[{...S,hx:4},{hx:-4}]},
     nackendreh:{fv:1,f:[{...FV,n:-0.9},{n:0.9}],T:5},
     nackeniso:{f:[{...S,a:[40,330],hx:1},{hx:0}]},
-    nackendehn:{fv:1,f:[{...FV,h:0},{h:28,n:0.5}],T:4},
-    brust:{f:[{...S,a:[262,5],l:[170,182],r:[192,186]},{t:6,x:84}],T:4},
+    nackendehn:{f:[{t:0,h:0,a:[185,180],b:[178,176],l:[90,180]},{h:38,hx:1}],fix:{k:"aL",x:96},pr:[["box",60,81,24,27]],T:4},
+    brust:{f:[{...S,a:[265,0],l:[172,182],r:[190,186]},{t:6,a:[248,0],l:[160,184],r:[196,188]}],fix:{k:"eA",x:58},pr:[["pfosten",55]],T:4},
     hueftbeuger:{f:[{...HK},{t:-3,l:[82,172],r:[203,270],b:[5,0]}],T:4},
     beinheben:{f:[{t:270,x:66,a:[60,75],l:[88,88],r:[90,90]},{l:[20,20]}],pr:[["link","wA","aL"]]},
-    hueftknick:{f:[{...S},{t:50,l:[168,186],a:[180,180]}],fix:{k:"aL",x:76}},
-    sitz9090:{fv:1,f:[{...FV,t:6,a:[150,175],b:[215,190],l:[78,100],r:[84,262]},{t:0,l:[20,170],r:[-20,190]},{t:-6,a:[145,170],b:[210,185],l:[-84,98],r:[-78,260]}],T:5},
+    hueftknick:{f:[{...S},{t:50,l:[168,186],a:[180,180]}],fix:{k:"aL",x:76},pr:[["pfosten",61]]},
+    sitz9090:{fv:1,f:[{...FV,t:6,a:[160,170],b:[200,190],l:[78,100],r:[84,262]},{t:0,l:[20,170],r:[-20,190]},{t:-6,l:[-84,98],r:[-78,260]}],T:5},
     kniewand:{f:[{t:0,a:[80,80],l:[165,185],r:[195,188]},{t:3,l:[145,205],r:[192,192]}],fix:{k:"aL",x:106},pr:[WAND]},
-    schaukel:{f:[{t:82,a:[180,180],l:[180,268],r:[262,266]},{t:76,a:[120,115],l:[140,268]}],fix:{k:"kL",x:74},T:4},
+    schaukel:{nog:1,f:[{t:90,n:0,rs:0.1,a:[30,150],b:[150,30],l:[-8,-8],r:[270,270]},{a:[88,92],b:[92,88],l:[16,16]}],fix:{k:"wA",x:126,y:62},T:4},
     figur4:{f:[{t:270,x:70,a:[40,50],l:[15,95],r:[30,300]},{a:[25,40],l:[-5,80],r:[12,285]}],T:4},
     einbein:{fv:1,f:[{...FV,t:-2,a:[120,150],b:[240,210],r:[205,150]},{t:2,a:[110,140],b:[250,220]}],T:3},
     tandem:{f:[{...S,l:[168,180],r:[192,188],a:[150,160],b:[210,200]},{l:[192,188],r:[168,180]}],T:2.4},
-    kniebeuge:{f:[{...S,a:[150,25]},{t:28,l:[95,200]}],fix:{k:"aL",x:84},pr:[["hantel","wA"]]},
+    kniebeuge:{v:["kniebeuge_trx","kniebeuge","kniebeuge","kniebeuge"],f:[{...S,a:[150,25]},{t:28,l:[95,200]}],fix:{k:"aL",x:84},pr:[["hantel","wA"]]},
+    kniebeuge_trx:{f:[{t:-4,a:[62,62],l:[178,178]},{t:8,a:[55,55],l:[92,200]}],fix:{k:"aL",x:86},pr:[WAND,["band",126,10,"wA"]]},
     kreuzheben:{f:[{...S,a:[180,180]},{t:55,l:[168,186]}],fix:{k:"aL",x:78},pr:[["hantel","wA"]]},
     trxrudern:{f:[{t:-28,a:[55,55],l:[152,152]},{t:-12,a:[215,60],l:[168,168]}],fix:{k:"aL",x:92},pr:[WAND,["band",126,10,"wA"]]},
-    facepull:{f:[{...S,x:78,a:[85,85]},{a:[75,290]}],pr:[WAND,["band",126,40,"wA"]]},
-    pallof:{f:[{...S,a:[150,30],l:[175,183]},{a:[92,92]}],pr:[["band",14,58,"wA"]]},
-    liegestuetz:{f:[{t:69,h:75,a:[180,180],l:[249,249]},{t:80,h:84,a:[270,180],l:[260,260]}],fix:{k:"aL",x:40}},
-    einarmrudern:{f:[{t:80,a:[178,180],b:[180,180],l:[178,184]},{a:[255,175]}],fix:{k:"aL",x:60},pr:[["box",82,82,24,26],["hantel","wA"]]},
-    druecken:{f:[{...HK,a:[160,20],b:[178,176]},{a:[35,35]}],pr:[["hantel","wA"]]},
+    facepull:{f:[{...S,x:78,a:[85,85]},{a:[65,320]}],pr:[WAND,["band",126,40,"wA"]]},
+    pallof:{cap:"Band kommt von der Seite",f:[{...S,a:[150,30],l:[175,183]},{a:[92,92]}],pr:[["band",14,58,"wA"]]},
+    liegestuetz:{v:["liegestuetz_hoch","liegestuetz_hoch","liegestuetz","liegestuetz"],f:[{t:69,h:75,a:[180,180],l:[249,249]},{t:80,h:84,a:[270,180],l:[260,260]}],fix:{k:"aL",x:40}},
+    liegestuetz_hoch:{f:[{t:35,h:40,a:[100,100],l:[215,215]},{t:44,h:50,a:[142,36],l:[224,224]}],fix:{k:"aL",x:47},pr:[WAND]},
+    einarmrudern:{f:[{t:80,a:[178,180],b:[180,180],l:[178,184],r:[160,268]},{a:[255,175]}],fix:{k:"aL",x:60},pr:[["box",62,82,44,26],["hantel","wA"]]},
+    druecken:{v:["druecken","druecken","druecken_hoch","druecken_hoch"],f:[{...HK,a:[160,20],b:[178,176]},{a:[40,40]}],pr:[["band",64,104,"wA"]]},
+    druecken_hoch:{f:[{...HK,a:[160,20],b:[178,176]},{a:[4,4]}],pr:[["hantel","wA"]]},
     aussenrot:{fv:1,f:[{...FV,a:[178,265]},{a:[178,95]}],pr:[["band",20,60,"wA"]]},
-    kaefer:{f:[{t:270,x:76,a:[0,0],b:[0,0],l:[0,90],r:[0,90]},{a:[-80,-85],r:[75,88]}],T:4},
-    seitstuetz:{f:[{t:79,h:70,a:[180,92],b:[30,30],l:[259,259]},{b:[8,8]}],fix:{k:"aL",x:44}},
+    kaefer:{v:["kaefer_beine","kaefer","kaefer","kaefer"],f:[{t:270,x:76,a:[0,0],b:[0,0],l:[0,90],r:[0,90]},{a:[-80,-85],r:[75,88]}],T:4},
+    kaefer_beine:{f:[{t:270,x:76,a:[0,0],b:[0,0],l:[0,90],r:[0,90]},{r:[75,88]}],T:4},
+    seitstuetz:{v:["seitstuetz_knie","seitstuetz_knie","seitstuetz","seitstuetz"],f:[{t:79,h:70,a:[180,92],b:[30,30],l:[259,259]},{b:[8,8]}],fix:{k:"aL",x:44}},
+    seitstuetz_knie:{f:[{t:74,h:66,a:[180,92],b:[30,30],l:[254,285]},{b:[8,8]}],fix:{k:"kL",x:60}},
     trxy:{f:[{t:-18,a:[62,62],l:[162,162]},{t:-4,a:[15,15],l:[176,176]}],fix:{k:"aL",x:96},pr:[WAND,["band",126,10,"wA"]]},
-    ausfall:{f:[{...S},{t:6,l:[80,180],r:[200,255],a:[178,170]}],fix:{k:"aL",x:92}},
-    bruecke:{f:[{t:270,a:[95,95],l:[35,145]},{t:248,l:[62,172]}],fix:{k:"aL",x:96}},
+    ausfall:{v:["ausfall_trx","ausfall_trx","ausfall","ausfall"],f:[{...S},{t:6,l:[80,180],r:[200,255],a:[178,170]}],fix:{k:"aL",x:92},pr:[["hantel","wA"]]},
+    ausfall_trx:{f:[{...S,a:[70,70]},{t:6,l:[80,180],r:[200,255],a:[60,60]}],fix:{k:"aL",x:92},pr:[WAND,["band",126,10,"wA"]]},
+    bruecke:{v:["bruecke","bruecke","bruecke_ein","bruecke_ein"],f:[{t:270,a:[95,95],l:[35,145]},{t:248,l:[62,172]}],fix:{k:"aL",x:96}},
+    bruecke_ein:{f:[{t:270,a:[95,95],l:[35,145],r:[35,90]},{t:248,l:[62,172],r:[62,62]}],fix:{k:"aL",x:96}},
     latzug:{f:[{t:0,x:86,a:[30,30],l:[180,270]},{a:[150,15]}],pr:[WAND,["band",126,12,"wA"]]},
-    tragen:{fv:1,f:[{...FV,l:[176,180],r:[192,168]},{l:[168,192],r:[184,180]}],pr:[["hantel","wA"]],T:1.6},
-    aufstehen:{f:[{t:12,a:[150,30],l:[90,180]},{...S,a:[150,30]}],fix:{k:"aL",x:92},pr:[["box",56,81,24,27]],T:2.4},
+    tragen:{fv:1,f:[{...FV,l:[176,180],r:[192,168]},{r:[184,180]},{l:[168,192]}],pr:[["hantel","wA"]],T:1.6},
+    aufstehen:{v:["aufstehen","aufstehen","aufstehen_h","aufstehen_h"],f:[{t:12,a:[150,30],l:[90,180]},{...S,a:[150,30]}],fix:{k:"aL",x:92},pr:[["box",56,81,24,27]],T:2.4},
+    aufstehen_h:{f:[{t:12,a:[150,30],l:[90,180]},{...S,a:[150,30]}],fix:{k:"aL",x:92},pr:[["box",56,81,24,27],["hantel","wA"]],T:2.4},
     boxen:{f:[{t:8,a:[88,88],b:[160,20],l:[160,185],r:[202,192]},{a:[160,20],b:[88,88]}],T:1},
-    seitschritt:{fv:1,f:[{...FV,x:70,a:[150,300],b:[210,60],l:[168,182],r:[192,178]},{x:86,l:[158,184],r:[188,180]}],pr:[["link","kL","kR"]],T:2},
+    seitschritt:{fv:1,f:[{...FV,x:68,a:[165,230],b:[195,130],l:[170,182],r:[190,178]},{x:84,l:[150,186],r:[186,180]}],pr:[["link","kL","kR"]],T:2},
     reichweite:{f:[{...S,a:[225,215]},{t:10,a:[25,20],l:[80,180],r:[200,255]}],fix:{k:"aR",x:56}},
-    holzhacker:{f:[{t:14,x:74,a:[150,150],l:[172,186],r:[190,186]},{t:-4,a:[-25,-30]}],pr:[WAND,["band",126,98,"wA"]]},
+    holzhacker:{fv:1,f:[{...FV,x:84,t:8,a:[140,130],b:[110,120]},{t:-8,a:[300,310],b:[320,315]}],pr:[WAND,["band",126,98,"wA"]]},
     gehen:{f:[{...S,l:[160,172],r:[200,205],a:[205,195],b:[150,140]},{l:[200,205],r:[160,172],a:[150,140],b:[205,195]}],T:1.2}
   };
 
@@ -72,6 +80,8 @@ const Anim = (() => {
       if (!("r" in q)) q.r = q.l;
       if (!("h" in q)) q.h = q.t;
       q.c = q.c || 0; q.hx = q.hx || 0;
+      if (!("as" in q)) q.as = 1;
+      if (!("rs" in q)) q.rs = 1;
       if (!("n" in q)) q.n = d.fv ? 0 : 1;
       if (!("x" in q)) q.x = 80;
       if (!("y" in q)) q.y = 60;
@@ -83,7 +93,7 @@ const Anim = (() => {
     const n = d.f.length;
     if (n === 1) return d.f[0];
     const pos = k*(n-1), i = Math.min(n-2, Math.floor(pos)), u = pos-i, A = d.f[i], B = d.f[i+1], p = {};
-    for (const key of ["t","h","c","hx","n","x","y"]) p[key] = mix(A[key],B[key],u);
+    for (const key of ["t","h","c","hx","n","x","y","as","rs"]) p[key] = mix(A[key],B[key],u);
     for (const key of ["a","b","l","r"]) p[key] = [mix(A[key][0],B[key][0],u), mix(A[key][1],B[key][1],u)];
     return p;
   }
@@ -101,10 +111,10 @@ const Anim = (() => {
     const vorn = D(p.h+90);
     P.kopf = add(P.neck,p.h,L.nk+L.hd); P.kopf = [P.kopf[0]+vorn[0]*p.hx, P.kopf[1]+vorn[1]*p.hx];
     P.nase = d.fv ? [P.kopf[0]+p.n*5, P.kopf[1]+1] : [P.kopf[0]+vorn[0]*5*p.n, P.kopf[1]+vorn[1]*5*p.n];
-    P.eA = add(P.sA,p.a[0],L.ua); P.wA = add(P.eA,p.a[1],L.fa);
+    P.eA = add(P.sA,p.a[0],L.ua*p.as); P.wA = add(P.eA,p.a[1],L.fa*p.as);
     P.eB = add(P.sB,p.b[0],L.ua); P.wB = add(P.eB,p.b[1],L.fa);
     P.kL = add(P.hA,p.l[0],L.th); P.aL = add(P.kL,p.l[1],L.sh);
-    P.kR = add(P.hB,p.r[0],L.th); P.aR = add(P.kR,p.r[1],L.sh);
+    P.kR = add(P.hB,p.r[0],L.th*p.rs); P.aR = add(P.kR,p.r[1],L.sh);
     const fl = fuss(p.l[1],d.fv), fr = fuss(p.r[1],d.fv);
     P.fL = fl === null ? P.aL : add(P.aL,fl,L.ft); P.fR = fr === null ? P.aR : add(P.aR,fr,L.ft);
     const mitte = [P.neck[0]/2, P.neck[1]/2];
@@ -112,8 +122,8 @@ const Anim = (() => {
     P.brust = [P.neck[0]*0.62, P.neck[1]*0.62];
     let dx, dy;
     const unten = Math.max(...Object.keys(P).filter(k => k !== "ctl" && k !== "nase" && k !== "brust").map(k => P[k][1] + (k === "kopf" ? L.hd : 0)));
-    if (d.nog) { dx = p.x; dy = p.y; }
-    else if (d.fix) { dx = d.fix.x - P[d.fix.k][0]; dy = d.fix.y !== undefined ? d.fix.y - P[d.fix.k][1] : BODEN-2.5-unten; }
+    if (d.fix) { dx = d.fix.x - P[d.fix.k][0]; dy = d.fix.y !== undefined ? d.fix.y - P[d.fix.k][1] : BODEN-2.5-unten; }
+    else if (d.nog) { dx = p.x; dy = p.y; }
     else { dx = p.x; dy = BODEN-2.5-unten; }
     for (const k in P) P[k] = [P[k][0]+dx, P[k][1]+dy];
     return P;
@@ -127,6 +137,7 @@ const Anim = (() => {
     if (!d.nog) s += '<line class="an-b" x1="6" y1="'+BODEN+'" x2="154" y2="'+BODEN+'"/>';
     for (const pr of d.pr || []) {
       if (pr[0] === "wand") { s += '<line class="an-g" x1="128" y1="8" x2="128" y2="'+BODEN+'"/>'; for (let y = 16; y < BODEN; y += 10) s += '<line class="an-g" x1="122" y1="'+y+'" x2="128" y2="'+y+'"/>'; }
+      if (pr[0] === "pfosten") s += '<line class="an-g" x1="'+pr[1]+'" y1="8" x2="'+pr[1]+'" y2="'+BODEN+'"/>';
       if (pr[0] === "box") s += '<rect class="an-g" x="'+pr[1]+'" y="'+pr[2]+'" width="'+pr[3]+'" height="'+pr[4]+'" rx="2"/>';
       if (pr[0] === "band") s += pl("an-z",[pr[1],pr[2]],P[pr[3]]);
       if (pr[0] === "link") s += pl("an-z",P[pr[1]],P[pr[2]]);
@@ -138,7 +149,8 @@ const Anim = (() => {
     s += '<circle class="an-kopf" cx="'+r1(P.kopf[0])+'" cy="'+r1(P.kopf[1])+'" r="'+L.hd+'"/><circle class="an-nase" cx="'+r1(P.nase[0])+'" cy="'+r1(P.nase[1])+'" r="1.6"/>';
     if (d.puls) s += '<circle class="an-puls" cx="'+r1(P.brust[0])+'" cy="'+r1(P.brust[1])+'" r="'+r1(4+7*puls)+'"/>';
     for (const pr of d.pr || []) if (pr[0] === "hantel") s += '<circle class="an-h" cx="'+r1(P[pr[1]][0])+'" cy="'+r1(P[pr[1]][1])+'" r="4"/>';
-    return s + '</g></svg>';
+    const cap = d.cap || (d.nog ? "Ansicht von oben" : d.fv ? "Ansicht von vorn" : "");
+    return s + '</g>' + (cap ? '<text class="an-t" x="6" y="115">'+cap+'</text>' : "") + '</svg>';
   }
 
   const css = document.createElement("style");
@@ -147,7 +159,7 @@ const Anim = (() => {
     ".an-kopf{fill:var(--card);stroke:var(--ink);stroke-width:3.5}.an-nase{fill:var(--ink);stroke:none}"+
     ".an-b{stroke:var(--line);stroke-width:2}.an-g{stroke:var(--muted);stroke-width:2;opacity:.7}"+
     ".an-z{stroke:var(--accent);stroke-width:2;stroke-dasharray:1 3.5}.an-h{fill:var(--accent);stroke:none}"+
-    ".an-puls{fill:var(--accent);opacity:.3;stroke:none}";
+    ".an-puls{fill:var(--accent);opacity:.3;stroke:none}.an-t{fill:var(--muted);font:7px sans-serif}";
   document.head.appendChild(css);
 
   let aktiv = [], laeuft = false;
@@ -164,11 +176,12 @@ const Anim = (() => {
   }
   function start(el) {
     if (!el) return;
-    const id = el.dataset.anim;
+    let id = el.dataset.anim;
+    if (U[id] && U[id].v) id = U[id].v[+el.dataset.wk || 0];
     if (!U[id]) { el.hidden = true; return; }
     if (ruhig()) { el.innerHTML = svg(id,1,0.5); return; }
     el.innerHTML = svg(id,0,0);
-    if (aktiv.some(a => a.el === el)) return;
+    aktiv = aktiv.filter(a => a.el !== el);
     aktiv.push({el,id,t0:performance.now()});
     if (!laeuft) { laeuft = true; requestAnimationFrame(bild); }
   }
