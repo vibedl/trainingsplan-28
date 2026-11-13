@@ -140,6 +140,15 @@ nav.tabs a.an{color:var(--accent);border-top-color:var(--accent)}
 .sp-wie{font-size:15px}
 .sp-wie p:last-child{margin-bottom:0}
 .sp-naechste{margin-top:12px;text-align:center}
+.vid-reihe{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btn.vid{font-size:13px;min-height:36px;padding:5px 12px;text-align:left}
+.vid-fenster{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:16px}
+.vid-innen{background:var(--card);color:var(--ink);border-radius:14px;padding:14px;width:100%;max-width:640px;max-height:100%;overflow:auto}
+.vid-kopf{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.vid-rahmen{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden}
+.vid-rahmen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid-innen p{margin:10px 0 0}
+#optVideos{width:100%;min-height:70px;font:12px ui-monospace,monospace;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--ink);box-sizing:border-box}
 .skala{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}
 .skala .btn{padding:0;min-height:44px}
 .opt{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
@@ -228,6 +237,13 @@ table{min-width:0}
     <div class="opt"><span>Alle Häkchen und Messwerte auf diesem Gerät löschen</span><button class="btn" id="optReset" type="button">Zurücksetzen</button></div>
   </div>
   <p class="klein" style="margin-top:8px">Alles wird nur auf diesem Gerät im Browser gespeichert, nichts wird übertragen.</p>
+  <h2>Eigene Videos</h2>
+  <div class="card">
+    <p class="klein" style="margin-top:0">Zu jeder Übung lassen sich eigene Video-Links hinterlegen, zum Beispiel aus Programmen, die du gekauft hast. Dann erscheint bei der Übung ein Knopf „▶ Video“. Die Links bleiben nur auf diesem Gerät. Zum Ansehen braucht es Internet.</p>
+    <textarea id="optVideos" aria-label="Liste der Video-Links" placeholder='{"kniebeuge":[["Titel","https://…"]]}'></textarea>
+    <div class="reihe" style="margin-top:8px"><button class="btn haupt" id="optVideoSpeichern" type="button">Liste speichern</button><button class="btn" id="optVideoWeg" type="button">Videos entfernen</button></div>
+    <p class="klein" id="optVideoStand" style="margin:8px 0 0"></p>
+  </div>
   <h2>Worauf der Plan sich stützt</h2>
 <div class="card">
 <ul>

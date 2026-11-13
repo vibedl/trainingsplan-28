@@ -43,7 +43,7 @@ function plan(typ,wk){
      {n:"Rumpf",m:4,u:[T("tragen",30,2,true),T("unterarmstuetz",20,[2,3,2,3][wk])]},
      {n:"Ausklang",m:3,u:[B("figur4",3,1,true),B("krokodil",6)]}]},
    M1:{typ:"mob",t:"Mobility oben · Brustkorb, Schulter, Nacken",b:[auf(R("schulterkreis","3 je Richtung",1,true)),
-     {n:"Atmung und Brustkorb",m:9,u:[T("rolleflanke",60,1,true),B("lufttanker",5),R("luftwelle","8 Wechsel"),B("seitatmung",4,1,true),R("buch","8",1,true)]},
+     {n:"Atmung und Brustkorb",m:9,u:[T("rolleflanke",60,1,true),B("lufttanker",5),R("luftwelle","3 lange Ausatmungen"),B("seitatmung",4,1,true),R("buch","8",1,true)]},
      {n:"Schulter und Nacken",m:10,u:[T("ballbrust",60,1,true),R("wandgleiten","10"),R("wandengel","8"),B("bandschulter",4,1,true),R("kinn","10, je 5 s halten"),R("nackendreh","5",1,true),R("nackeniso","4 Richtungen, je 3 × 6 s")]},
      {n:"Leichte Aktivierung",m:3,u:[R("facepull","12 leicht",2),R("trxy","8")]},
      {n:"Ausklang",m:4,u:[T("haengen",30,2),B("krokodil",12)]}]},
@@ -59,7 +59,7 @@ function plan(typ,wk){
      ...(wk===0?[{n:"Mobility",m:6,u:[B("hueftbeuger",4,1,true),B("verbeugung",3,2),R("buch","6",1,true)]}]:[]),
      {n:"Ausklang",m:3,u:[T("haengen",25,2),B("atem",6)]}]},
    R:{typ:"ruhe",t:"Erholung · Atmung und Lockern",b:[
-     {n:"Atmung",m:9,u:[B("atem",8),B("lufttanker",5),R("luftwelle","8 Wechsel"),B("rippenband",8),B("krokodil",12)]},
+     {n:"Atmung",m:9,u:[B("atem",8),B("lufttanker",5),R("luftwelle","3 lange Ausatmungen"),B("rippenband",8),B("krokodil",12)]},
      {n:"Sanfte Mobility",m:12,u:[T("rolleflanke",60,1,true),R("katze","5 sehr langsam"),R("buch","6",1,true),B("hueftbeuger",4,1,true),B("figur4",3,1,true),R("nackendreh","5",1,true),B("nackendehn",3,1,true),T("haengen",30,2)]},
      {n:"Gehen",m:10,u:[T("gehen",600)]}]}
   };
@@ -160,10 +160,49 @@ function heuteNr(){
 }
 const iso = d => d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 
+/* Eigene Video-Links je Übung. Sie stehen nie im öffentlichen Code: Quelle ist window.VIDEOS (nur lokale Fassung)
+   oder eine Liste, die der Nutzer selbst einfügt und die nur in diesem Browser gespeichert wird. */
+const esc = t => String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function videoListe(roh){
+  const aus = {};
+  if(!roh || typeof roh!=="object") return aus;
+  for(const id in roh){
+    if(!E[id] || !Array.isArray(roh[id])) continue;
+    const l = roh[id].filter(v=>Array.isArray(v) && /^https:\/\/[^\s"'<>]+$/.test(String(v[1]))).map(v=>[String(v[0]||"Video").slice(0,80),String(v[1])]);
+    if(l.length) aus[id] = l.slice(0,4);
+  }
+  return aus;
+}
+function videos(){
+  if(window.VIDEOS) return videoListe(window.VIDEOS);
+  try{ return videoListe(JSON.parse(store.get("videos","{}"))); }catch(e){ return {}; }
+}
+function videoKnoepfe(id){
+  const v = videos()[id]; if(!v) return "";
+  return '<div class="vid-reihe">'+v.map((x,i)=>'<button type="button" class="btn vid" data-vid="'+id+'" data-vi="'+i+'">▶ '+esc(x[0])+'</button>').join("")+'</div>';
+}
+function videoZeigen(id,i){
+  const v = (videos()[id]||[])[i]; if(!v) return;
+  const yt = v[1].match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([\w-]{11})/), vm = v[1].match(/vimeo\.com\/(\d+)(?:\/(\w+))?/);
+  const src = yt ? "https://www.youtube-nocookie.com/embed/"+yt[1]+"?rel=0&playsinline=1" : vm ? "https://player.vimeo.com/video/"+vm[1]+(vm[2]?"?h="+vm[2]:"") : "";
+  if(tm && !tm.paused){ const h=$("#spHaupt"); if(h && h.textContent==="Pause") h.click(); }
+  const d = document.createElement("div"); d.className = "vid-fenster"; d.id = "vidFenster";
+  d.innerHTML = '<div class="vid-innen"><div class="vid-kopf"><b>'+esc(E[id].n)+'</b><button type="button" class="btn" id="vidZu">Schließen</button></div>'+
+    (src?'<div class="vid-rahmen"><iframe src="'+esc(src)+'" title="'+esc(v[0])+'" allow="fullscreen; picture-in-picture; encrypted-media" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>':"")+
+    '<p class="klein">'+esc(v[0])+' · <a href="'+esc(v[1])+'" target="_blank" rel="noopener">Im Browser öffnen</a>, falls das Video hier nicht startet.</p></div>';
+  document.body.appendChild(d);
+  const zu = ()=>d.remove();
+  d.addEventListener("click",e=>{ if(e.target===d || e.target.id==="vidZu") zu(); });
+}
+document.addEventListener("click",e=>{
+  const b = e.target.closest && e.target.closest("[data-vid]");
+  if(b){ e.preventDefault(); videoZeigen(b.dataset.vid,+b.dataset.vi); }
+});
+
 function zeile(it,wk,b){
   const e = E[it.id];
   const stufe = e.st ? '<br><b class="stufe">Stufe diese Woche:</b> '+e.st[wk] : "";
-  return '<details class="ue"><summary><span>'+e.n+'</span><span class="dosis">'+dosis(it,wk,b)+'</span></summary><div class="wie"><div class="anim" data-anim="'+it.id+'" data-wk="'+wk+'"></div>'+e.h+(e.c?'<br><b>Achte auf:</b> '+e.c:"")+stufe+'</div></details>';
+  return '<details class="ue"><summary><span>'+e.n+'</span><span class="dosis">'+dosis(it,wk,b)+'</span></summary><div class="wie"><div class="anim" data-anim="'+it.id+'" data-wk="'+wk+'"></div>'+e.h+(e.c?'<br><b>Achte auf:</b> '+e.c:"")+stufe+videoKnoepfe(it.id)+'</div></details>';
 }
 
 function zeigePlan(){
@@ -273,7 +312,7 @@ function zeigeSchritt(autostart){
    '<div class="sp-buehne" id="buehne"><div class="kreis" id="kreis" hidden></div><div class="sp-zahl '+(st.k==="t"?"":"text")+'" id="zahl">'+gross+'</div><div class="sp-phase" id="phase">'+klein+'</div></div>'+
    '<div class="sp-tasten"><button class="btn haupt gross" id="spHaupt" type="button"></button></div>'+
    '<div class="sp-neben"><button class="btn" id="spZurueck" type="button"'+(S.i===0?" disabled":"")+'>Zurück</button><button class="btn" id="spWeiter" type="button">Überspringen</button></div>'+
-   '<div class="card sp-wie"><p>'+e.h+'</p>'+(e.c?'<p><b>Achte auf:</b> '+e.c+'</p>':"")+stufe+'</div>'+
+   '<div class="card sp-wie"><p>'+e.h+'</p>'+(e.c?'<p><b>Achte auf:</b> '+e.c+'</p>':"")+stufe+videoKnoepfe(st.id)+'</div>'+
    '<p class="klein sp-naechste">'+(nxt?'Danach: '+E[nxt.id].n:'Das ist die letzte Übung.')+'</p>';
   const haupt = $("#spHaupt"), z = $("#zahl"), ph = $("#phase");
   if(window.Anim || typeof Anim!=="undefined") Anim.start($("#spieler .anim"));
@@ -386,9 +425,38 @@ function einstellungen(){
   k.onchange = ()=>store.set("takt",k.checked?"1":"0");
   const d = $("#optStart"); d.value = store.get("start","");
   d.onchange = ()=>{ store.set("start",d.value); zeigePlan(); };
-  $("#optReset").onclick = ()=>{ if(confirm("Wirklich alle Häkchen, Messwerte und den Starttag löschen?")){ store.clear(); zeigePlan(); zeigeMesswerte(); einstellungen(); } };
+  const vt = $("#optVideos");
+  if(vt){
+    const stand = ()=>{ const n = Object.keys(videos()).length; if(videoMeldung){ $("#optVideoStand").textContent = videoMeldung; videoMeldung = ""; return; } $("#optVideoStand").textContent = window.VIDEOS ? "Diese lokale Fassung bringt Videos zu "+n+" Übungen mit." : n ? "Gespeichert: Videos zu "+n+" Übungen." : "Noch keine Videos hinterlegt."; };
+    const kodiert = ()=>btoa(unescape(encodeURIComponent(JSON.stringify(videos())))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+    if(window.VIDEOS){
+      vt.value = JSON.stringify(videos()); vt.readOnly = true;
+      $("#optVideoSpeichern").textContent = "Liste kopieren";
+      $("#optVideoSpeichern").onclick = ()=>{ vt.select(); try{ navigator.clipboard.writeText(vt.value); }catch(e){ document.execCommand("copy"); } $("#optVideoStand").textContent = "Kopiert. In der Handy-App unter Hinweise → Eigene Videos einfügen."; };
+      $("#optVideoWeg").textContent = "Übertragungs-Link kopieren";
+      $("#optVideoWeg").onclick = ()=>{ const u = "https://vibedl.github.io/trainingsplan-28/"+"#videos="+kodiert(); try{ navigator.clipboard.writeText(u); }catch(e){} $("#optVideoStand").textContent = "Link kopiert. Auf dem Handy einmal öffnen, die Videos werden dort gespeichert."; };
+    } else {
+      $("#optVideoSpeichern").onclick = ()=>{
+        let roh; try{ roh = JSON.parse(vt.value); }catch(e){ $("#optVideoStand").textContent = "Das ist keine gültige Liste. Bitte den kopierten Text vollständig einfügen."; return; }
+        const l = videoListe(roh); store.set("videos",JSON.stringify(l)); vt.value = ""; stand(); zeigePlan();
+      };
+      $("#optVideoWeg").onclick = ()=>{ if(confirm("Alle hinterlegten Video-Links auf diesem Gerät entfernen?")){ store.set("videos","{}"); stand(); zeigePlan(); } };
+    }
+    stand();
+  }
+  $("#optReset").onclick = ()=>{ if(confirm("Wirklich alle Häkchen, Messwerte und den Starttag löschen?")){ const v = store.get("videos","{}"); store.clear(); store.set("videos",v); zeigePlan(); zeigeMesswerte(); einstellungen(); } };
 }
 
+let videoMeldung = "";
+(function(){
+  const m = location.hash.match(/^#videos=([\w-]+)$/); if(!m) return;
+  if(!window.VIDEOS) try{
+    const l = videoListe(JSON.parse(decodeURIComponent(escape(atob(m[1].replace(/-/g,"+").replace(/_/g,"/"))))));
+    if(Object.keys(l).length){ store.set("videos",JSON.stringify(l)); videoMeldung = "Übernommen: Videos zu "+Object.keys(l).length+" Übungen. Bei jeder Übung steht jetzt ein Knopf „▶ Video“."; }
+    else videoMeldung = "Der Link enthielt keine passenden Videos.";
+  }catch(e){ videoMeldung = "Der Video-Link war unvollständig. Bitte stattdessen die Liste hier einfügen."; }
+  history.replaceState(null,"",location.pathname+"#hinweise");
+})();
 zeigePlan(); zeigeMesswerte(); einstellungen();
 tab(location.hash.slice(1)||"plan");
 if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js").catch(()=>{});
